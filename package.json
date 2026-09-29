@@ -1,0 +1,24 @@
+{
+  "name": "@flatkeeper/ui",
+  "version": "0.1.0",
+  "description": "flatkeeper design system: tokens shared by the host cabinet and the guest mini-site",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "files": ["tokens.css", "host-color.js", "host-color.d.ts"],
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./host-color": {
+      "types": "./host-color.d.ts",
+      "default": "./host-color.js"
+    }
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/inter-tight": "^5.2.7",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.2.0"
+  }
+}

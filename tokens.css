@@ -1,0 +1,251 @@
+/*
+ * flatkeeper design tokens (pen «01 · Foundations», guest layer — «11»).
+ * Shared by the host cabinet and the guest mini-site:
+ *
+ *   @import "tailwindcss";
+ *   @import "@flatkeeper/ui/tokens.css";
+ *
+ * Here: fonts, colours (dark by default, `.light` / `.dark` scopes), radii,
+ * shadows and the host's brand slot. Each app keeps its own type scale —
+ * the guest one is larger.
+ */
+
+@import "@fontsource-variable/inter-tight";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/fraunces";
+
+@theme {
+    /* fontsource-variable registers the bundled fonts as «… Variable»; the
+       plain names stay as a fallback for a locally installed copy. */
+    --font-sans:
+        "Inter Tight Variable", "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-serif: "Fraunces Variable", "Fraunces", Georgia, serif;
+    --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+
+    --color-accent: var(--accent);
+    --color-accent-deep: var(--accent-deep);
+    --color-accent-subtle: var(--accent-subtle);
+    --color-bg-card: var(--bg-card);
+    --color-bg-surface: var(--bg-surface);
+    --color-bg-raised: var(--bg-raised);
+    --color-danger: var(--danger);
+    --color-success: var(--success);
+    --color-success-subtle: var(--success-subtle);
+    --color-danger-subtle: var(--danger-subtle);
+    --color-info: var(--info);
+    --color-info-subtle: var(--info-subtle);
+    --color-nav-active-bg: var(--nav-active-bg);
+    --color-overlay: var(--overlay);
+    --color-platform-tg: var(--platform-tg);
+    --color-platform-tg-subtle: var(--platform-tg-subtle);
+    --color-platform-max: var(--platform-max);
+    --color-platform-max-subtle: var(--platform-max-subtle);
+    --color-platform-yookassa: var(--platform-yookassa);
+    --color-platform-yookassa-subtle: var(--platform-yookassa-subtle);
+    --color-platform-avito: var(--platform-avito);
+    --color-platform-avito-subtle: var(--platform-avito-subtle);
+    --color-platform-yandex: var(--platform-yandex);
+    --color-platform-yandex-subtle: var(--platform-yandex-subtle);
+    --color-warning: var(--warning);
+    --color-warning-subtle: var(--warning-subtle);
+    --color-stroke-danger: var(--stroke-danger);
+    --color-stroke-default: var(--stroke-default);
+    --color-text-muted: var(--text-muted);
+    --color-text-on-accent: var(--text-on-accent);
+    --color-text-on-color: var(--text-on-color);
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+
+    /* Radius scale — names match the design system, NOT Tailwind defaults:
+       rounded-md = 8px, rounded-lg = 12px. */
+    --radius-xs: 4px; /* tags, calendar cells */
+    --radius-sm: 6px; /* icon buttons, mini buttons */
+    --radius-md: 8px; /* cabinet buttons and inputs */
+    --radius-lg: 12px; /* cabinet cards and dialogs; guest buttons and fields */
+    --radius-xl: 16px; /* bottom sheet; guest cards */
+
+    /* Elevation — warm-graphite shadows (Tailwind's pure-black ones turn
+       grey on the warm palette). Values are per theme, see --elevation-*. */
+    --shadow-raised: var(--elevation-raised); /* active segment, toggle knob */
+    --shadow-popover: var(--elevation-popover); /* dropdown, menu, toast */
+    --shadow-dialog: var(--elevation-dialog); /* dialog, bottom sheet */
+    --shadow-panel: var(--elevation-panel); /* side panel */
+    --shadow-card-hover: var(--elevation-card-hover); /* hovered card */
+    --shadow-layer: var(--elevation-layer); /* top layer of a layered dialog, cast upward */
+}
+
+/* The host's brand slot (pen «11» → Слот бренда хоста), see `hostColors`
+   in ./host-color.js. `inline`, so each utility reads the raw `--host-*`
+   where it's used — a page overrides them on a wrapper, and a `var()`
+   resolved on `:root` would never see that. */
+@theme inline {
+    /* Fill of the guest's main action and the selected dates. */
+    --color-host-accent: var(--host-accent);
+    /* Text on that fill — light or graphite, whichever reads (≥ 4.5). */
+    --color-host-on-accent: var(--host-on-accent);
+    /* The host colour as text or a line on paper: links, focus, the payment
+       timer. Graphite when the host colour is too light to read. */
+    --color-host-ink: var(--host-ink);
+    /* The nights between the selected dates, the active chip. */
+    --color-host-accent-subtle: color-mix(in srgb, var(--host-accent) 10%, transparent);
+}
+
+:root {
+    /* Clay — what the cabinet saves when the host picks nothing. */
+    --host-accent: #a85d3f;
+    --host-on-accent: #fbf8f3;
+    --host-ink: #a85d3f;
+}
+
+/* ── Dark theme (default) — deep warm graphite ─────────────────────────── */
+/* `.dark` also pins a subtree to dark inside the light theme. */
+:root,
+.dark {
+    --accent: #ede6dc; /* inverted in dark: light warm paper — primary action surface */
+    --accent-deep: #a85d3f; /* clay — primary action hover */
+    --accent-subtle: #a85d3f26; /* selected chips */
+    --bg-card: #1f1c18; /* base UI plane — sidebar, topbar, grid, main panels */
+    --bg-surface: #15110d; /* inset — inputs, segments, chips (within a card) */
+    --bg-raised: #2a2622; /* raised — popovers, dropdowns, tooltips, hovered cards */
+    --danger: #ef4444; /* clear red, distinct from clay accent */
+    --success: #7fa88a; /* muted sage */
+    --nav-active-bg: #322d27; /* warm hover for nav items */
+    --stroke-danger: #7f1d1d; /* dim red border */
+    --stroke-default: #3a332c; /* warm hairline */
+    --text-muted: #7a6e62; /* warm muted */
+    --text-on-accent: #1f1c18; /* dark text on the light primary button */
+    --text-on-color: #fbf8f3; /* off-white on clay / danger / success fills */
+    --text-primary: #f5f1eb; /* warm white */
+    --text-secondary: #c9beab; /* warm secondary */
+
+    --danger-subtle: #7f1d1d33;
+    --platform-tg: #8fb6d9; /* tg blue, warmer */
+    --platform-tg-subtle: #3d4f5c2e;
+    --warning: #d9a05b; /* clay amber, replaces neon orange */
+    --warning-subtle: #d9a05b18;
+    --success-subtle: #7fa88a1a;
+    --info: #8fb0cc; /* neutral hint — not Telegram */
+    --info-subtle: #8fb0cc1a;
+    --overlay: #00000099; /* modal backdrop */
+    --platform-max: #a89cd6;
+    --platform-max-subtle: #a89cd61f;
+    --platform-yookassa: #7fb0ee;
+    --platform-yookassa-subtle: #7fb0ee1f;
+    --platform-avito: #9bc27f;
+    --platform-avito-subtle: #9bc27f1f;
+    --platform-yandex: #e0896a;
+    --platform-yandex-subtle: #e0896a1f;
+
+    --elevation-raised: 0 1px 2px rgb(0 0 0 / 0.35);
+    --elevation-popover: 0 8px 24px rgb(0 0 0 / 0.45);
+    --elevation-dialog: 0 24px 48px rgb(0 0 0 / 0.55);
+    --elevation-panel: -12px 0 40px rgb(0 0 0 / 0.45);
+    --elevation-card-hover: 0 10px 28px rgb(0 0 0 / 0.4);
+    --elevation-layer: 0 -6px 18px rgb(0 0 0 / 0.3);
+}
+
+/* ── Light theme — warm clay paper (the guest site is always light) ────── */
+.light {
+    --accent: #2b2825; /* almost-black warm graphite — primary action surface */
+    --accent-deep: #a85d3f; /* clay — primary action hover */
+    --accent-subtle: #a85d3f1a;
+    --bg-card: #fbf8f3; /* base UI plane — sidebar, topbar, grid, main panels */
+    --bg-surface: #efe9e0; /* inset — inputs, segments, chips (within a card) */
+    --bg-raised: #ffffff; /* raised — popovers, dropdowns, tooltips, hovered cards */
+    --nav-active-bg: #e8decf;
+    --stroke-danger: #fca5a5;
+    --stroke-default: #e2d9cb;
+    --text-muted: #9c8e7e;
+    --text-on-accent: #fbf8f3;
+    --text-on-color: #fbf8f3;
+    --text-primary: #2b2825;
+    --text-secondary: #5c544b;
+
+    --danger: #dc2626;
+    --success: #5c7a6b;
+    --danger-subtle: #fee2e2;
+    --platform-tg: #40688b;
+    --platform-tg-subtle: #dce6ee;
+    --warning: #b07515;
+    --warning-subtle: #f4e5c8;
+    --success-subtle: #dce6dd;
+    --info: #4f7391;
+    --info-subtle: #e1e8ee;
+    --overlay: #2b282599;
+    --platform-max: #695a9f;
+    --platform-max-subtle: #e6e2ef;
+    --platform-yookassa: #2c65b4;
+    --platform-yookassa-subtle: #dde7f5;
+    --platform-avito: #4a7035;
+    --platform-avito-subtle: #e2ead9;
+    --platform-yandex: #a8441f;
+    --platform-yandex-subtle: #f4dfd5;
+
+    --elevation-raised: 0 1px 2px rgb(43 40 37 / 0.1);
+    --elevation-popover: 0 8px 24px rgb(43 40 37 / 0.13);
+    --elevation-dialog: 0 24px 48px rgb(43 40 37 / 0.2);
+    --elevation-panel: -12px 0 40px rgb(43 40 37 / 0.12);
+    --elevation-card-hover: 0 10px 28px rgb(43 40 37 / 0.12);
+    --elevation-layer: 0 -6px 18px rgb(43 40 37 / 0.08);
+}
+
+/* `@theme` emits the `--color-* : var(--*)` indirection on `:root` only, and
+   a custom property resolves its `var()` at the element that DECLARES it —
+   so a `.light` nested on a descendant would override the raw palette while
+   `--color-*` kept inheriting the already-resolved `:root` (dark) values.
+   Restating the mapping here makes `.light` / `.dark` composable at any
+   depth (the guest preview inside the dark cabinet, the dark art half of
+   the onboarding). No effect on `<html class="light">`, where both rules
+   resolve on the same element. */
+.light,
+.dark {
+    --color-accent: var(--accent);
+    --color-accent-deep: var(--accent-deep);
+    --color-accent-subtle: var(--accent-subtle);
+    --color-bg-card: var(--bg-card);
+    --color-bg-surface: var(--bg-surface);
+    --color-bg-raised: var(--bg-raised);
+    --color-danger: var(--danger);
+    --color-success: var(--success);
+    --color-success-subtle: var(--success-subtle);
+    --color-danger-subtle: var(--danger-subtle);
+    --color-info: var(--info);
+    --color-info-subtle: var(--info-subtle);
+    --color-nav-active-bg: var(--nav-active-bg);
+    --color-overlay: var(--overlay);
+    --color-platform-tg: var(--platform-tg);
+    --color-platform-tg-subtle: var(--platform-tg-subtle);
+    --color-platform-max: var(--platform-max);
+    --color-platform-max-subtle: var(--platform-max-subtle);
+    --color-platform-yookassa: var(--platform-yookassa);
+    --color-platform-yookassa-subtle: var(--platform-yookassa-subtle);
+    --color-platform-avito: var(--platform-avito);
+    --color-platform-avito-subtle: var(--platform-avito-subtle);
+    --color-platform-yandex: var(--platform-yandex);
+    --color-platform-yandex-subtle: var(--platform-yandex-subtle);
+    --color-warning: var(--warning);
+    --color-warning-subtle: var(--warning-subtle);
+    --color-stroke-danger: var(--stroke-danger);
+    --color-stroke-default: var(--stroke-default);
+    --color-text-muted: var(--text-muted);
+    --color-text-on-accent: var(--text-on-accent);
+    --color-text-on-color: var(--text-on-color);
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --shadow-raised: var(--elevation-raised);
+    --shadow-popover: var(--elevation-popover);
+    --shadow-dialog: var(--elevation-dialog);
+    --shadow-panel: var(--elevation-panel);
+    --shadow-card-hover: var(--elevation-card-hover);
+    --shadow-layer: var(--elevation-layer);
+}
+
+html {
+    font-family: var(--font-sans);
+}
+
+body {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+}
