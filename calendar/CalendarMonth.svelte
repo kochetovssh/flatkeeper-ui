@@ -42,6 +42,7 @@
 		locale,
 		labels,
 		preview = false,
+		releasable = variant === 'guest',
 		onprev,
 		onnext,
 		prevDisabled = false,
@@ -63,8 +64,12 @@
 		variant?: 'guest' | 'cabinet';
 		locale: string;
 		labels: Labels;
-		/** Tint the range up to the hovered day while picking the check-out. */
+		/** Tint the range up to the hovered day while picking the check-out.
+		 *  Cabinet variant only. */
 		preview?: boolean;
+		/** A second tap on the check-in lets it go (the guest site). Off in the
+		 *  cabinet, where the old picker ignored it. */
+		releasable?: boolean;
 		/** Arrows are drawn only when their handler is given. */
 		onprev?: () => void;
 		onnext?: () => void;
@@ -124,6 +129,8 @@
 
 	function kindOf(iso: string): { kind: Kind; outOnly: boolean } {
 		if ((min && iso < min) || (max && iso > max)) return { kind: 'off', outOnly: false };
+		// The check-out may sit on the next guest's arrival day — still the selection.
+		if (iso === checkOut && checkIn) return { kind: 'free', outOnly: false };
 		const n = night?.(iso);
 		if (choosing && iso > checkIn) {
 			if (range) {
@@ -159,7 +166,7 @@
 				isIn,
 				isOut,
 				isMid,
-				inPreview: !!previewTo && iso > checkIn && iso < previewTo,
+				inPreview: !!previewTo && kind === 'free' && iso > checkIn && iso < previewTo,
 				price,
 				showPrice: !!price && (kind === 'free' || isIn || isOut || isMid)
 			};
@@ -168,6 +175,7 @@
 
 	function pick(iso: string) {
 		if (choosing && iso === checkIn) {
+			if (!releasable) return;
 			// Second tap on the check-in lets it go.
 			checkIn = '';
 		} else if (choosing && iso > checkIn) {
@@ -183,8 +191,11 @@
 	// ── Keyboard: one tab stop, arrows walk the free days ──────────────
 	let grid: HTMLElement | undefined = $state();
 	const enabled = $derived(cells.filter((c): c is Cell => !!c && c.kind === 'free'));
+	/** The last focused day keeps the tab stop, so Tab leaves the grid. */
+	let focused = $state('');
 	const tabStop = $derived(
-		enabled.find((c) => c.isOut)?.iso ??
+		(enabled.some((c) => c.iso === focused) ? focused : undefined) ??
+			enabled.find((c) => c.isOut)?.iso ??
 			enabled.find((c) => c.isIn)?.iso ??
 			enabled[0]?.iso ??
 			''
@@ -206,7 +217,7 @@
 		const parts = [dayName.format(new Date(`${c.iso}T00:00:00Z`))];
 		if (c.price !== null) parts.push(price(c.price));
 		if (c.kind === 'booked' && labels.booked) parts.push(labels.booked);
-		if (c.outOnly || c.isOut) parts.push(labels.checkout);
+		if ((c.outOnly || c.isOut) && labels.checkout) parts.push(labels.checkout);
 		return parts.join(', ');
 	}
 
@@ -282,6 +293,7 @@
 							: 'rounded-lg'}"
 					onclick={() => pick(c.iso)}
 					onkeydown={onKey}
+					onfocus={() => (focused = c.iso)}
 					onmouseenter={() => (hovered = c.iso)}
 					onmouseleave={() => hovered === c.iso && (hovered = '')}
 				>
@@ -310,7 +322,7 @@
 				</button>
 			{:else}
 				{@const col = i % 7}
-				{@const bar = c.isMid || c.inPreview}
+				{@const bar = (c.isMid && c.kind !== 'off') || c.inPreview}
 				<button
 					type="button"
 					data-iso={c.iso}
@@ -325,16 +337,17 @@
 							? `bg-accent-deep text-text-on-color ${checkOut ? 'rounded-l-xs' : 'rounded-xs'}`
 							: c.isOut
 								? 'rounded-r-xs bg-accent-deep text-text-on-color'
-								: c.isMid
+								: c.isMid && c.kind !== 'off'
 									? 'bg-accent-deep/20 text-text-primary'
 									: c.inPreview
 										? 'bg-accent-deep/10 text-text-primary'
 										: c.iso === today
 											? 'rounded-xs border border-accent-deep/50 text-text-primary hover:bg-nav-active-bg'
 											: 'rounded-xs text-text-primary hover:bg-nav-active-bg'}
-						{bar && col === 0 ? 'rounded-l-xs' : ''} {bar && col === 6 ? 'rounded-r-xs' : ''}"
+						{(bar || c.isOut) && col === 0 ? 'rounded-l-xs' : ''} {(bar || (c.isIn && checkOut)) && col === 6 ? 'rounded-r-xs' : ''}"
 					onclick={() => pick(c.iso)}
 					onkeydown={onKey}
+					onfocus={() => (focused = c.iso)}
 					onmouseenter={() => (hovered = c.iso)}
 					onmouseleave={() => hovered === c.iso && (hovered = '')}
 				>

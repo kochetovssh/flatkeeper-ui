@@ -1,6 +1,6 @@
 {
   "name": "@flatkeeper/ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "flatkeeper design system: tokens and shared components of the host cabinet and the guest mini-site",
   "type": "module",
   "private": true,
@@ -39,5 +39,13 @@
   "peerDependencies": {
     "svelte": "^5.57.0",
     "tailwindcss": "^4.2.0"
+  },
+  "peerDependenciesMeta": {
+    "svelte": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    }
   }
 }

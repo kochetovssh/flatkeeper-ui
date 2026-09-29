@@ -27,7 +27,7 @@ import EmptyArt from '@flatkeeper/ui/EmptyArt.svelte';
 Installed as a git dependency pinned to a tag:
 
 ```json
-"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.2.0"
+"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.2.1"
 ```
 
 Release: bump `version`, commit, `git tag vX.Y.Z && git push --tags`, then
