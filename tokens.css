@@ -7,12 +7,18 @@
  *
  * Here: fonts, colours (dark by default, `.light` / `.dark` scopes), radii,
  * shadows and the host's brand slot. Each app keeps its own type scale —
- * the guest one is larger.
+ * the guest one is larger; the shared components use sizes both scales
+ * have, and `price-cell` only in the guest variant.
  */
 
 @import "@fontsource-variable/inter-tight";
 @import "@fontsource-variable/jetbrains-mono";
 @import "@fontsource-variable/fraunces";
+
+/* The package's own components: Tailwind doesn't scan node_modules, and a
+   `@source` here resolves next to this file, so the apps need nothing. */
+@source "./calendar";
+@source "./art";
 
 @theme {
     /* fontsource-variable registers the bundled fonts as «… Variable»; the
