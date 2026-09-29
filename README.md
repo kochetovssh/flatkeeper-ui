@@ -27,8 +27,10 @@ import EmptyArt from '@flatkeeper/ui/EmptyArt.svelte';
 Installed as a git dependency pinned to a tag:
 
 ```json
-"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.2.1"
+"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.2.2"
 ```
 
 Release: bump `version`, commit, `git tag vX.Y.Z && git push --tags`, then
 update the tag in both apps. No build step — the files ship as they are.
+The apps bring Tailwind v4 themselves; it isn't a peer, so it stays a dev
+dependency there and out of the runtime image.
