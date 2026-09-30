@@ -1,0 +1,68 @@
+/*
+ * The staff admin panel's shell (pen «14 · Админка» → Основы): a cold
+ * graphite sidebar in both themes, an indigo accent for selection and
+ * navigation, and the environment plate — so a staff member never mistakes
+ * the admin tab for the host cabinet. Only flatkeeper-admin-ui imports it,
+ * after the shared tokens:
+ *
+ *   @import "tailwindcss";
+ *   @import "@flatkeeper/ui/tokens.css";
+ *   @import "@flatkeeper/ui/admin.css";
+ */
+
+@theme {
+    --color-admin-chrome: var(--admin-chrome); /* sidebar */
+    --color-admin-chrome-raised: var(--admin-chrome-raised); /* active item, counter */
+    --color-admin-chrome-stroke: var(--admin-chrome-stroke); /* lines on the sidebar */
+    --color-admin-chrome-text: var(--admin-chrome-text); /* text on the sidebar */
+    --color-admin-chrome-muted: var(--admin-chrome-muted); /* icons, captions */
+    --color-admin-on-chrome-accent: var(--admin-on-chrome-accent); /* indicator on the sidebar */
+    --color-admin-accent: var(--admin-accent); /* selection, links, tabs */
+    --color-admin-accent-subtle: var(--admin-accent-subtle); /* selected row */
+    --color-env-prod: var(--env-prod); /* PROD plate — red */
+    --color-env-stage: var(--env-stage); /* STAGE plate — amber */
+}
+
+/* ── Dark theme (default) — the sidebar stays darker than the warm content ── */
+:root,
+.dark {
+    --admin-chrome: #101216;
+    --admin-chrome-raised: #1f222a;
+    --admin-chrome-stroke: #262932;
+    --admin-chrome-text: #dadde5;
+    --admin-chrome-muted: #8a909e;
+    --admin-on-chrome-accent: #afbbea;
+    --admin-accent: #a7b3e2;
+    --admin-accent-subtle: #a7b3e224;
+    --env-prod: #d8453d;
+    --env-stage: #d9a05b;
+}
+
+.light {
+    --admin-chrome: #23262e;
+    --admin-chrome-raised: #343844;
+    --admin-chrome-stroke: #383c48;
+    --admin-chrome-text: #eceef3;
+    --admin-chrome-muted: #9ea4b3;
+    --admin-on-chrome-accent: #afbbea;
+    --admin-accent: #4a5a8c;
+    --admin-accent-subtle: #4a5a8c17;
+    --env-prod: #c8322b;
+    --env-stage: #c98a1b;
+}
+
+/* See tokens.css: restating the mapping keeps nested `.light` / `.dark`
+   composable. */
+.light,
+.dark {
+    --color-admin-chrome: var(--admin-chrome);
+    --color-admin-chrome-raised: var(--admin-chrome-raised);
+    --color-admin-chrome-stroke: var(--admin-chrome-stroke);
+    --color-admin-chrome-text: var(--admin-chrome-text);
+    --color-admin-chrome-muted: var(--admin-chrome-muted);
+    --color-admin-on-chrome-accent: var(--admin-on-chrome-accent);
+    --color-admin-accent: var(--admin-accent);
+    --color-admin-accent-subtle: var(--admin-accent-subtle);
+    --color-env-prod: var(--env-prod);
+    --color-env-stage: var(--env-stage);
+}

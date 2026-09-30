@@ -2,12 +2,14 @@
 
 Design tokens shared by the host cabinet (`flatkeeper-front`) and the guest
 mini-site (`flatkeeper-direct`); the error scene also by the landing
-(`flatkeeper-landing`). Source of truth — pen.dev boards «01 · Foundations»,
-«11 · Direct» and «13 · Страница 404».
+(`flatkeeper-landing`), the admin shell only by the staff admin panel
+(`flatkeeper-admin-ui`). Source of truth — pen.dev boards «01 · Foundations»,
+«11 · Direct», «13 · Страница 404» and «14 · Админка».
 
 ```css
 @import "tailwindcss";
 @import "@flatkeeper/ui/tokens.css";
+@import "@flatkeeper/ui/admin.css"; /* the admin panel only */
 ```
 
 ```ts
@@ -21,6 +23,7 @@ import NotFoundArt from '@flatkeeper/ui/NotFoundArt.svelte';
 | Export | What |
 |---|---|
 | `tokens.css` | Fonts, colours (`.light` / `.dark`), radii, shadows, host slot `--host-*`; `@source` for the components below |
+| `admin.css` | The admin panel's shell: graphite sidebar `--admin-chrome*`, indigo `--admin-accent*`, environment plates `--env-prod` / `--env-stage` |
 | `host-color` | `hostColors` — text on the host's button by contrast (≥ 4.5), the 8 swatches |
 | `calendar` | ISO date helpers; `checkoutRange` — where a check-out may go (per-night occupancy, min stay) |
 | `CalendarMonth.svelte` | One month of a range picker: `variant="guest"` (52 px cells, prices, booking rules) or `"cabinet"` (compact popover grid) |
@@ -30,7 +33,7 @@ import NotFoundArt from '@flatkeeper/ui/NotFoundArt.svelte';
 Installed as a git dependency pinned to a tag:
 
 ```json
-"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.3.0"
+"@flatkeeper/ui": "github:kochetovssh/flatkeeper-ui#v0.4.0"
 ```
 
 Release: bump `version`, commit, `git tag vX.Y.Z && git push --tags`, then
