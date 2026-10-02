@@ -1,6 +1,15 @@
 <script module lang="ts">
 	/** One composition per app section. */
-	export type EmptyArtName = 'bookings' | 'units' | 'catalog' | 'chats' | 'notifications' | 'flows';
+	export type EmptyArtName =
+		| 'bookings'
+		| 'units'
+		| 'catalog'
+		| 'chats'
+		| 'notifications'
+		| 'flows'
+		| 'welcome'
+		| 'guide'
+		| 'payment';
 </script>
 
 <script lang="ts">
@@ -82,6 +91,8 @@
 					<circle class={c.tone} cx={c.cx} cy={c.cy} r="38" opacity="0.72" />
 				{/each}
 			</g>
+		{:else if name === 'welcome'}
+			<circle class="secondary bob" cx="198" cy="56" r="14" opacity="0.9" />
 		{:else if name === 'notifications'}
 			{#each ['0s', '-1.83s', '-3.67s'] as delay (delay)}
 				<circle
@@ -128,6 +139,30 @@
 				<path d="M142 109V97a8 8 0 0 1 16 0v12z" />
 				<rect x="138" y="105.4" width="24" height="3.2" rx="1.2" />
 			</g>
+		{:else if name === 'welcome'}
+			<!-- An open arched door, warm light inside and spilling on the floor. -->
+			<ellipse class="secondary" cx="136" cy="174" rx="40" ry="7.3" opacity="0.55" />
+			<path class="primary" d="M96 172V88a40 40 0 0 1 80 0v84z" />
+			<path class="secondary" d="M112 172v-68a24 24 0 0 1 48 0v68z" />
+			<rect class="ink" transform="translate(178 126) skewX(10.2)" x="-9" y="-46" width="18" height="92" rx="4" opacity="0.9" />
+			<circle class="paper" cx="173" cy="128" r="2.8" />
+		{:else if name === 'guide'}
+			<!-- An open booklet; the key lies on it (front layer). -->
+			<rect class="primary" x="96" y="56" width="108" height="80" rx="6" />
+			{#each [125, 175] as cx (cx)}
+				<rect class="paper" x={cx - 23} y="60" width="46" height="68" rx="3" />
+				{#each [76, 88, 100] as cy, j (cy)}
+					<rect class="ink" x={cx - 14} y={cy - 2} width={j === 2 ? 18 : 28} height="4" rx="2" opacity="0.3" />
+				{/each}
+			{/each}
+		{:else if name === 'payment'}
+			<!-- A bank card; the coin is in front (front layer). -->
+			<g transform="translate(138 92) rotate(-11.46)">
+				<rect class="primary" x="-50" y="-32" width="100" height="64" rx="7" />
+				<rect class="ink" x="-50" y="-23" width="100" height="14" opacity="0.85" />
+				<rect class="secondary" x="-37" y="-0.8" width="18" height="13.6" rx="2" />
+				<rect class="paper" x="4" y="15.6" width="32" height="4.8" rx="2.4" opacity="0.7" />
+			</g>
 		{:else if name === 'flows'}
 			<path class="line" d="M98 76L150 120L202 72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
 			<rect class="primary" x="80" y="62" width="36" height="28" rx="5" />
@@ -164,6 +199,22 @@
 			<circle class="ink swing" cx="150" cy="111" r="2.6" opacity="0.9" />
 		{:else if name === 'flows'}
 			<circle class="paper travel" r="3.6" />
+		{:else if name === 'guide'}
+			<g class="bob bob-slow">
+				<g class="secondary" transform="translate(170 140) rotate(20)">
+					<circle cx="-20" cy="0" r="12" />
+					<rect x="-14" y="-3.4" width="40" height="6.8" rx="2.4" />
+					<rect x="15.6" y="1" width="4.8" height="10" />
+					<rect x="22" y="1" width="4" height="8" />
+				</g>
+				<circle class="paper" transform="translate(170 140) rotate(20)" cx="-20" cy="0" r="4.4" />
+			</g>
+		{:else if name === 'payment'}
+			<g class="bob">
+				<circle class="secondary" cx="190" cy="132" r="24" />
+				<circle class="ink" cx="190" cy="132" r="16" opacity="0.22" />
+				<circle class="secondary" cx="187" cy="129" r="12" />
+			</g>
 		{/if}
 	</g>
 </svg>
