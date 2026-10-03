@@ -92,7 +92,7 @@
 				{/each}
 			</g>
 		{:else if name === 'welcome'}
-			<circle class="secondary bob" cx="198" cy="56" r="14" opacity="0.9" />
+			<circle class="secondary bob" cx="98" cy="72" r="16" opacity="0.9" />
 		{:else if name === 'notifications'}
 			{#each ['0s', '-1.83s', '-3.67s'] as delay (delay)}
 				<circle
@@ -140,12 +140,14 @@
 				<rect x="138" y="105.4" width="24" height="3.2" rx="1.2" />
 			</g>
 		{:else if name === 'welcome'}
-			<!-- An open arched door, warm light inside and spilling on the floor. -->
-			<ellipse class="secondary" cx="136" cy="174" rx="40" ry="7.3" opacity="0.55" />
-			<path class="primary" d="M96 172V88a40 40 0 0 1 80 0v84z" />
-			<path class="secondary" d="M112 172v-68a24 24 0 0 1 48 0v68z" />
-			<rect class="ink" transform="translate(178 126) skewX(10.2)" x="-9" y="-46" width="18" height="92" rx="4" opacity="0.9" />
-			<circle class="paper" cx="173" cy="128" r="2.8" />
+			<!-- The bookings arch with its door swung in, warm light spilling out
+			     (pen «16», email-art «door open»). -->
+			<rect class="secondary" x="150" y="172" width="80" height="4.8" opacity="0.55" />
+			<path class="primary" d="M106 172V92a44 44 0 0 1 88 0v80z" />
+			<path class="secondary" d="M126 172v-56a24 24 0 0 1 48 0v56z" />
+			<path class="paper" d="M126 172v-56a10.08 24 0 0 1 20.16 0v56z" />
+			<path class="ink" d="M126 172v-56a10.08 24 0 0 1 20.16 0v56z" opacity="0.08" />
+			<circle class="ink" cx="142.8" cy="128" r="2.8" opacity="0.85" />
 		{:else if name === 'guide'}
 			<!-- An open booklet; the key lies on it (front layer). -->
 			<rect class="primary" x="96" y="56" width="108" height="80" rx="6" />

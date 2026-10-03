@@ -1,6 +1,6 @@
 {
   "name": "@flatkeeper/ui",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "flatkeeper design system: tokens and shared components of the host cabinet, the guest mini-site and the staff admin panel",
   "type": "module",
   "private": true,
